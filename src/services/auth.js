@@ -1,3 +1,5 @@
+const fs = require("fs");
+const readline = require("readline");
 const { google } = require("googleapis");
 
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"];
@@ -30,8 +32,8 @@ function getNewToken(oAuth2Client, callback) {
 function authorize(callback) {
   const oAuth2Client = new google.auth.OAuth2(
     process.env.CLIENT_ID,
-    process.env.CLIENT_SECRET,
-    "https://accounts.google.com/o/oauth2/auth"
+    process.env.CLIENT_SECRET
+    // "https://www.googleapis.com/auth/spreadsheets"???????????
   );
 
   // Check if we have previously stored a token.
