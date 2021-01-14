@@ -9,7 +9,7 @@ function failedByMissingClass() {
 }
 
 function scoreToPass(averageGrade) {
-  return Math.round(10 - averageGrade);
+  return Math.round(100 - averageGrade);
 }
 
 module.exports = { scoreToPass, failedByMissingClass, calculateAverageGrade };
