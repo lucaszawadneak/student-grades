@@ -1,4 +1,4 @@
-const { getData, setData } = require("../services/api");
+const { fetchSheet, writeSheet } = require("../services/api");
 
 function calculateAverageGrade(fistTest, secondTest, thirdTest) {
   return Math.round(
@@ -15,42 +15,48 @@ function scoreToPass(averageGrade) {
 }
 
 async function handleAnalyseSheet(auth) {
-  const data = await getData();
-  let i;
-  let length = data.length;
+  const studentSheet = await fetchSheet();
+  let student;
 
-  for (i = 0; i < length; i++) {
-    let missedClasses = data[i][2];
+  for (student = 0; student < studentSheet.length; student++) {
+    const missedClasses = studentSheet[student][2];
     const failed = failedByMissingClass(missedClasses);
-    let averageGrade = calculateAverageGrade(
-      data[i][3],
-      data[i][4],
-      data[i][5]
+    const averageGrade = calculateAverageGrade(
+      studentSheet[student][3],
+      studentSheet[student][4],
+      studentSheet[student][5]
     );
+    const averageGradeString = averageGrade.toFixed(0);
 
     if (failed) {
-      console.log(`${data[i][1]} reprovou por faltas!`);
-      await setData(i, ["Reprovou por faltas", 0], auth);
+      console.log(`${studentSheet[student][1]} reprovou por faltas!`);
+      await writeSheet(student, ["Reprovou por faltas", 0], auth);
 
       continue;
     }
 
     if (averageGrade < 50) {
       console.log(
-        `${data[i][1]} (${averageGrade.toFixed(0)}) reprovou por nota!`
+        `${studentSheet[student][1]} (${averageGradeString}) reprovou por nota!`
       );
-      await setData(i, ["Reprovou por nota", 0], auth);
+      await writeSheet(student, ["Reprovou por nota", 0], auth);
       continue;
     } else if (averageGrade < 70) {
       console.log(
-        `${data[i][1]} (${averageGrade.toFixed(0)}) foi para a final!`
+        `${studentSheet[student][1]} (${averageGradeString}) foi para a final!`
       );
-      await setData(i, ["Exame Final", scoreToPass(averageGrade)], auth);
+      await writeSheet(
+        student,
+        ["Exame Final", scoreToPass(averageGrade)],
+        auth
+      );
       continue;
     }
 
-    console.log(`${data[i][1]} (${averageGrade.toFixed(0)}) está aprovado!`);
-    await setData(i, ["Aprovado", 0], auth);
+    console.log(
+      `${studentSheet[student][1]} (${averageGradeString}) está aprovado!`
+    );
+    await writeSheet(student, ["Aprovado", 0], auth);
   }
 
   console.log("\nMédias concluídas!");

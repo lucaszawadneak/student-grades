@@ -10,14 +10,19 @@ function getNewToken(oAuth2Client, callback) {
     access_type: "offline",
     scope: SCOPES,
   });
+
   console.log("Autorize esse app visitando o link:", authUrl);
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
   });
+
   rl.question("Entre com o código da página aqui: ", (code) => {
     rl.close();
-    oAuth2Client.getToken(code, (err, token) => {
+    const decodedCode = unescape(code);
+    console.log(`Seu token: ${decodedCode}`);
+
+    oAuth2Client.getToken(decodedCode, (err, token) => {
       if (err) return console.error("Erro ao buscar seu token de acesso!", err);
       oAuth2Client.setCredentials(token);
 
@@ -36,7 +41,6 @@ function authorize(callback) {
     "https://oauth2.googleapis.com/token"
   );
 
-  // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, (err, token) => {
     if (err) return getNewToken(oAuth2Client, callback);
     oAuth2Client.setCredentials(JSON.parse(token));

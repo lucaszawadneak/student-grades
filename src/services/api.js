@@ -2,7 +2,7 @@ const axios = require("axios");
 const { google } = require("googleapis");
 const sheets = google.sheets("v4");
 
-async function getData() {
+async function fetchSheet() {
   console.log("Buscando dados...\n");
 
   let data = undefined;
@@ -21,9 +21,9 @@ async function getData() {
   return [];
 }
 
-async function setData(locationID, data, auth) {
-  const correctLine = locationID + 4;
-  let locationString = `engenharia_de_software!G${correctLine}:H${correctLine}`;
+async function writeSheet(studentID, data, auth) {
+  const correctLine = studentID + 4;
+  const locationString = `engenharia_de_software!G${correctLine}:H${correctLine}`;
 
   const request = {
     spreadsheetId: "1rsnktYKqpbB7B7xSMGUEtU6ka161SlCe9UxhCuRho3Y",
@@ -40,4 +40,4 @@ async function setData(locationID, data, auth) {
     .catch((err) => console.log(err.message));
 }
 
-module.exports = { getData, setData };
+module.exports = { fetchSheet, writeSheet };
