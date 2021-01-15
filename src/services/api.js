@@ -8,7 +8,7 @@ async function fetchSheet() {
   let data = undefined;
   await axios
     .get(
-      `https://sheets.googleapis.com/v4/spreadsheets/1rsnktYKqpbB7B7xSMGUEtU6ka161SlCe9UxhCuRho3Y/values/engenharia_de_software!A4:F27?key=${process.env.API_KEY}`
+      `https://sheets.googleapis.com/v4/spreadsheets/${process.env.SHEET_ID}/values/A4:F27?key=${process.env.API_KEY}`
     )
     .then((response) => (data = response.data.values))
     .catch((err) => console.log(err.message));
@@ -23,10 +23,10 @@ async function fetchSheet() {
 
 async function writeSheet(studentID, data, auth) {
   const correctLine = studentID + 4;
-  const locationString = `engenharia_de_software!G${correctLine}:H${correctLine}`;
+  const locationString = `G${correctLine}:H${correctLine}`;
 
   const request = {
-    spreadsheetId: "1rsnktYKqpbB7B7xSMGUEtU6ka161SlCe9UxhCuRho3Y",
+    spreadsheetId: process.env.SHEET_ID,
     range: locationString,
     valueInputOption: "RAW",
     resource: {
