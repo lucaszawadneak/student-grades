@@ -1,6 +1,6 @@
 ## :notebook: Student Grades Sheet
 
-Thismall project is part of a challenge proposed by [Tunts](http://www.tuntscorp.com/site/) during an intership selection. This app is a NodeJS software that gathers student information form a spreadsheet on [Google Sheets](https://www.google.com/sheets/about/) calculates each student average score, and returns the student situation (passed, failed or needs to realize final exam);
+This project is part of a challenge proposed by [Tunts](http://www.tuntscorp.com/site/) during an intership selection. This app is a NodeJS software that gathers student information form a spreadsheet on [Google Sheets](https://www.google.com/sheets/about/) calculates each student average score, and returns the student situation (passed, failed or needs to realize final exam);
 
 ### :computer: How to reproduce
 
