@@ -30,7 +30,7 @@ async function handleAnalyseSheet(auth) {
 
     if (failed) {
       console.log(`${data[i][1]} reprovou por faltas!`);
-      //   await setData(i, ["Reprovou por faltas", 0],auth);
+      await setData(i, ["Reprovou por faltas", 0], auth);
 
       continue;
     }
@@ -39,19 +39,21 @@ async function handleAnalyseSheet(auth) {
       console.log(
         `${data[i][1]} (${averageGrade.toFixed(0)}) reprovou por nota!`
       );
-      //   await setData(i, ["Reprovou por nota", 0],auth);
+      await setData(i, ["Reprovou por nota", 0], auth);
       continue;
     } else if (averageGrade < 70) {
       console.log(
         `${data[i][1]} (${averageGrade.toFixed(0)}) foi para a final!`
       );
-      //   await setData(i, ["Exame Final", scoreToPass(averageGrade)],auth);
+      await setData(i, ["Exame Final", scoreToPass(averageGrade)], auth);
       continue;
     }
 
     console.log(`${data[i][1]} (${averageGrade.toFixed(0)}) está aprovado!`);
-    // await setData(i, ["Aprovado", 0],auth);
+    await setData(i, ["Aprovado", 0], auth);
   }
+
+  console.log("\nMédias concluídas!");
 }
 
 module.exports = handleAnalyseSheet;

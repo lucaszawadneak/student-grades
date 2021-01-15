@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { google } = require("googleapis");
-const { sheets } = google;
+const sheets = google.sheets("v4");
 
 async function getData() {
   console.log("Buscando dados...\n");
@@ -24,7 +24,6 @@ async function getData() {
 async function setData(locationID, data, auth) {
   const correctLine = locationID + 4;
   let locationString = `engenharia_de_software!G${correctLine}:H${correctLine}`;
-  console.log(locationString);
 
   const request = {
     spreadsheetId: "1rsnktYKqpbB7B7xSMGUEtU6ka161SlCe9UxhCuRho3Y",
@@ -38,7 +37,6 @@ async function setData(locationID, data, auth) {
 
   await sheets.spreadsheets.values
     .update(request)
-    .data.then((res) => console.log(res))
     .catch((err) => console.log(err.message));
 }
 

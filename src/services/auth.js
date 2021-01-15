@@ -32,8 +32,8 @@ function getNewToken(oAuth2Client, callback) {
 function authorize(callback) {
   const oAuth2Client = new google.auth.OAuth2(
     process.env.CLIENT_ID,
-    process.env.CLIENT_SECRET
-    // "https://www.googleapis.com/auth/spreadsheets"???????????
+    process.env.CLIENT_SECRET,
+    "https://oauth2.googleapis.com/token"
   );
 
   // Check if we have previously stored a token.
